@@ -2,18 +2,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Card from "../types/Card";
 import { Button } from "react-bootstrap";
-import { Card as CardComp, CardContent, Typography } from "@mui/material";
-import { useState } from "react";
 import "../css/FlashcardPage.css";
+import { useState } from "react";
 
 const FlashcardPage: React.FC = () => {
   const flashCard: Card = useSelector((state: RootState) => state.cardReducer);
   const [flipped, setFlipped] = useState(false);
   const [current, setCurrent] = useState(0);
 
-  const handleClick = () => {
-    setFlipped(!flipped);
-  };
 
   const handleOnClickPrevious = () => {
     if (current > 0) {

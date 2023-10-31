@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import FlashCard from "../components/FlashCard";
 import Card from "../types/Card";
-import { useState } from "react";
 
 const MyFlashcardPage: React.FC = () => {
   const flashCards: Card[] = useSelector((state: RootState) => {
