@@ -12,9 +12,13 @@ const MyFlashcardPage: React.FC = () => {
   return (
     <div>
       <h2>Flashcards</h2>
-      {cards.map((card: Card, idx: number) => {
-        return <FlashCard card={card} key={idx} />;
-      })}
+      <div className="row justify-content-between">
+        {cards.map((card: Card, idx: number) => (
+          <div key={idx} className="col-md-4 mb-4">
+            <FlashCard card={card} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -10,7 +10,6 @@ const FlashcardPage: React.FC = () => {
   const [flipped, setFlipped] = useState(false);
   const [current, setCurrent] = useState(0);
 
-
   const handleOnClickPrevious = () => {
     if (current > 0) {
       setCurrent(current - 1);
@@ -33,10 +32,10 @@ const FlashcardPage: React.FC = () => {
         <div className="back">{flashCard.qAndA[current].answer}</div>
       </div>
       <div className="d-flex justify-content-around m-4">
-        <Button onClick={handleOnClickPrevious} className="mx-3">
+        <Button onClick={handleOnClickPrevious} className="mx-3 btn btn-light">
           Previous
         </Button>
-        <Button onClick={handleOnClickNext} className="mx-3">
+        <Button onClick={handleOnClickNext} className="mx-3 btn btn-light">
           Next
         </Button>
       </div>

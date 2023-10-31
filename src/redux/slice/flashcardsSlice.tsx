@@ -9,7 +9,6 @@ export const flashcardsSlice = createSlice({
   reducers: {
     set: (state: CardsState, action) => {
       state.cards = [...state.cards, action.payload];
-      console.log(state.cards, "flashcardsSlice 111");
     },
   },
 });

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Card from "../types/Card";
 import OpenAI from "openai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Document from "../types/Document";
 import { v4 as uuidv4 } from "uuid";
 import { set } from "../redux/slice/flashcardsSlice";
@@ -18,8 +18,10 @@ const HomePage: React.FC = () => {
 
   const cards: Card[] = flashCards ?? [];
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (sentence: string) => {
+    setIsLoading(true);
     const openai = new OpenAI({
       apiKey: import.meta.env.VITE_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
@@ -61,6 +63,7 @@ const HomePage: React.FC = () => {
             createdAt: Date.now(),
             qAndA: documents,
           };
+          setIsLoading(false);
           dispatch(set(card));
         }
       });
@@ -72,15 +75,20 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="d-flex row m-1">
-      <SearchBar onSubmit={(sentence: string) => handleSearch(sentence)} />
+      <SearchBar
+        isLoading={isLoading}
+        onSubmit={(sentence: string) => handleSearch(sentence)}
+      />
       <div>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between my-4">
           <h2>Top Flashcards</h2>
-          <Link to={"/flashcards"}>View All →</Link>
+          <Link className={"text-white link-underline-dark"} to={"/flashcards"}>
+            View All →
+          </Link>
         </div>
-        <div>
+        <div className="d-flex justify-content-between">
           {cards.length !== 0 &&
-            cards.map((card: Card, id) => {
+            cards.slice(0, 3).map((card: Card, id) => {
               return <FlashCard key={id} card={card} />;
             })}
         </div>

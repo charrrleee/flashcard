@@ -3,6 +3,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 
 interface SearchBarProps {
   onSubmit: (sentence: string) => void;
+  isLoading: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
@@ -11,17 +12,12 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sentence: string = e.currentTarget.input.value;
-    const form = e.currentTarget;
-    console.log("testst", "run", sentence.length < 10, form.checkValidity());
-    // const form = e.currentTarget;
-    // if (sentence.length < 10) {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    // } else {
-
-    props.onSubmit(e.currentTarget.input.value);
-    setValidated(true);
-    // }
+    if (sentence.length >= 10) {
+      setValidated(false);
+      props.onSubmit(sentence);
+    } else {
+      setValidated(true);
+    }
   };
 
   return (
@@ -43,8 +39,22 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           </Form.Control.Feedback>
         </InputGroup>
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
+      {
+        validated && <Form.Label>Please Enter at least 10 words.</Form.Label>
+      }
+      <Button
+        className={`btn btn-light ${props.isLoading ? "disabled" : ""}`}
+        variant="primary"
+        type="submit"
+      >
+        {props.isLoading && (
+          <span
+            className="spinner-border spinner-border-sm mr-2"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        )}
+        {props.isLoading ? "Loading..." : "Submit"}
       </Button>
     </Form>
   );

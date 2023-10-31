@@ -10,8 +10,6 @@ export const flashcardSlice = createSlice({
   },
   reducers: {
     set: (state: FlashCardState, action) => {
-      console.log(state, action.payload, "flashcardsSlice 222");
-
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.createdAt = action.payload.createdAt;
